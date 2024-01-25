@@ -3,6 +3,7 @@ from datetime import datetime
 
 @dataclass
 class Flies:
+    id: int
     greenhouse_id: int
     sector_id: int
     total_flies: int
@@ -14,6 +15,7 @@ class Flies:
     
     def to_dict(self):
         return {
+            "id": self.id,
             "greenhouse_id": self.greenhouse_id,
             "sector_id": self.sector_id,
             "total_flies": self.total_flies,
