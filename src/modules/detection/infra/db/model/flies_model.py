@@ -1,9 +1,11 @@
 import datetime
+from modules.detection.domain.model.flies import Flies
+from seedwork.infra.model_mapper import ModelMapper
 from seedwork.utils.base_model import BaseModel
 
 from modules.base.infra.db.model.greenhouse_model import GreenhouseModel
 
-from sqlalchemy import Integer, String, DateTime, ForeignKey
+from sqlalchemy import Integer, DateTime, ForeignKey
 
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import Mapped
@@ -20,3 +22,16 @@ class FliesModel(BaseModel):
     greenhouse = relationship("GreenhouseModel", back_populates="flies")
     sector_id: Mapped[int] = mapped_column('sector_id', Integer, ForeignKey('sectors.id'))
     sector = relationship("SectorModel", back_populates="flies")
+
+class FliesModelMapper(ModelMapper):
+    @staticmethod
+    def to_domain(flies_model: FliesModel) -> Flies:
+        flies = Flies(flies_count=flies_model.flies_count, created_at=flies_model.created_at, greenhouse=GreenhouseModel.to_domain(flies_model.greenhouse), sector=flies_model.sector)
+        flies.id = flies_model.id
+        return flies
+
+    @staticmethod
+    def to_model(flies: Flies) -> FliesModel:
+        flies_model = FliesModel(flies_count=flies.flies_count, created_at=flies.created_at, greenhouse=GreenhouseModel.to_model(flies.greenhouse), sector=flies.sector)
+        flies_model.id = flies.id
+        return flies_model
