@@ -1,27 +1,27 @@
 from modules.detection.domain.ports.repository import FliesRepositoryPort
-from modules.detection.domain.model.flies import Flies
+from modules.detection.infra.db.model.flies_model import FliesModel
+from seedwork.infra.uow import AbstractUnitOfWorkManager
 
-class SQLAlchemyFliesAdapter(FliesRepositoryPort):
-    def __init__(self, session):
-        self.session = session
-    
-    def add(self, flies):
-        self.session.add(flies)
-    
-    def get(self, flies_id):
-        return self.session.query(Flies).filter_by(id=flies_id).first()
-    
-    def get_all(self):
-        return self.session.query(Flies).all()
-    
-    def update(self, flies):
-        self.session.add(flies)
-    
-    def delete(self, flies):
-        self.session.delete(flies)
-    
-    def commit(self):
-        self.session.commit()
-    
-    def rollback(self):
-        self.session.rollback()
+class FliesRepositoryAdapter(FliesRepositoryPort):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def add(self, flies, uow: AbstractUnitOfWorkManager):
+        with uow as session:
+            session.add(flies)
+
+    def get(self, flies_id, uow: AbstractUnitOfWorkManager):
+        with uow as session:
+            return session.query(FliesModel).filter_by(id=flies_id).first()
+
+    def get_all(self, uow: AbstractUnitOfWorkManager):
+        with uow as session:
+            return session.query(FliesModel).all()
+
+    def update(self, flies, uow: AbstractUnitOfWorkManager):
+        with uow as session:
+            session.add(flies)
+
+    def delete(self, flies, uow: AbstractUnitOfWorkManager):
+        with uow as session:
+            session.delete(flies)
