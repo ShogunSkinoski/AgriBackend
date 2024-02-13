@@ -5,8 +5,8 @@ from datetime import datetime
 class Flies:
     id: int
     greenhouse_id: int
-    sector_id: int
-    total_flies: int
+    sector_id: str
+    flies_count: int
     created_at: datetime = datetime.now().date()
     
     @classmethod
@@ -18,6 +18,6 @@ class Flies:
             "id": self.id,
             "greenhouse_id": self.greenhouse_id,
             "sector_id": self.sector_id,
-            "total_flies": self.total_flies,
-            "created_at": self.created_at
+            "flies_count": self.flies_count,
+            "created_at": self.created_at.strftime("%Y-%m-%d")
         }

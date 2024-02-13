@@ -26,12 +26,18 @@ class FliesModel(BaseModel):
 class FliesModelMapper(ModelMapper):
     @staticmethod
     def to_domain(flies_model: FliesModel) -> Flies:
-        flies = Flies(flies_count=flies_model.flies_count, created_at=flies_model.created_at, greenhouse=GreenhouseModel.to_domain(flies_model.greenhouse), sector=flies_model.sector)
-        flies.id = flies_model.id
+        flies = Flies(
+            id = flies_model.id,
+            flies_count=flies_model.flies_count,
+            created_at=flies_model.created_at,
+            greenhouse_id= flies_model.greenhouse_id,
+            sector_id=flies_model.sector_id
+            )
+       
         return flies
 
     @staticmethod
     def to_model(flies: Flies) -> FliesModel:
-        flies_model = FliesModel(flies_count=flies.flies_count, created_at=flies.created_at, greenhouse=GreenhouseModel.to_model(flies.greenhouse), sector=flies.sector)
+        flies_model = FliesModel(flies_count=flies.flies_count, created_at=flies.created_at, greenhouse_id=flies.greenhouse_id, sector_id=flies.sector_id)
         flies_model.id = flies.id
         return flies_model

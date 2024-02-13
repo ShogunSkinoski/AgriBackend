@@ -19,19 +19,6 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
-    greenhouses = op.create_table(
-        'greenhouses',
-        sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('name', sa.String(255), nullable=False),
-        sa.Column('created_at', sa.DateTime, nullable=False),
-    )
-    sectors = op.create_table(
-        'sectors',
-        sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('name', sa.String(255), nullable=False),
-        sa.Column('greenhouse_id', sa.Integer, sa.ForeignKey('greenhouses.id')),
-        sa.Column('created_at', sa.DateTime, nullable=False),
-    )
     flies = op.create_table(
         'flies',
         sa.Column('id', sa.Integer, primary_key=True),
@@ -39,20 +26,6 @@ def upgrade() -> None:
         sa.Column('sector_id', sa.Integer, sa.ForeignKey('sectors.id')),
         sa.Column('flies_count', sa.Integer, nullable=False),
         sa.Column('created_at', sa.DateTime, nullable=False),
-    )
-    op.bulk_insert(
-        greenhouses,
-        [
-            {'id': 1, 'name': 'Greenhouse 1', 'created_at': datetime.datetime.now().strftime("%Y-%m-%d")},
-            {'id': 2, 'name': 'Greenhouse 2', 'created_at': datetime.datetime.now().strftime("%Y-%m-%d")},
-            {'id': 3, 'name': 'Greenhouse 3', 'created_at': datetime.datetime.now().strftime("%Y-%m-%d")},
-        ]
-    )
-    op.bulk_insert(
-        sectors,
-        [
-            {'id': 1, 'name': 'Sector 1', 'greenhouse_id': 1, 'created_at': datetime.datetime.now().strftime("%Y-%m-%d")},
-        ]
     )
     op.bulk_insert(
         flies,
@@ -64,5 +37,4 @@ def upgrade() -> None:
 
 def downgrade() -> None:
     op.drop_table('flies')
-    op.drop_table('sectors')
-    op.drop_table('greenhouses')
+

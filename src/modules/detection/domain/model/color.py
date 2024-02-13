@@ -3,14 +3,14 @@ from dataclasses import dataclass
 from enum import Enum
 
 class TomatousClass(Enum):
-    tomatous_1 = 1
-    tomatous_2 = 2
-    tomatous_3 = 3
-    tomatous_4 = 4
-    tomatous_5 = 5
-    tomatous_6 = 6
-    tomatous_7 = 7
-    tomatous_8 = 8
+    tomatous_1 = 2
+    tomatous_2 = 3
+    tomatous_3 = 4
+    tomatous_4 = 5
+    tomatous_5 = 6
+    tomatous_6 = 7
+    tomatous_7 = 8
+    tomatous_8 = 9
 
 class FlowerClass(Enum):
     flower_light_color = "light"
@@ -25,9 +25,9 @@ class Color:
     id: int
     greenhouse_id: int
     sector_id: int
-    tomatous_class: TomatousClass
-    flower_class: FlowerClass
-    leaf_class: LeafClass
+    tomatous_class: TomatousClass = None
+    flower_class: FlowerClass = None
+    leaf_class: LeafClass = None
     created_at: datetime = datetime.now().date()
 
     @classmethod

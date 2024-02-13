@@ -17,7 +17,9 @@ class FliesRepositoryAdapter(FliesRepositoryPort):
     def get_all(self, uow: AbstractUnitOfWorkManager):
         with uow as session:
             return session.query(FliesModel).all()
-
+    def get_all_by_sector(self, sector_id, uow: AbstractUnitOfWorkManager):
+        with uow as session:
+            return session.query(FliesModel).filter_by(sector_id=sector_id).all()
     def update(self, flies, uow: AbstractUnitOfWorkManager):
         with uow as session:
             session.add(flies)
