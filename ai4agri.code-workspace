@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../frontend/ai4agri_web"
+		},
+		{
+			"path": "../frontend/ai4agri"
+		}
+	],
+	"settings": {}
+}

@@ -47,7 +47,7 @@ async def get_greenhouse(
     return JSONResponse(greenhouses, status_code=200, media_type="application/json")
 
 @management_router.get("/greenhouse/{greenhouse_id}")
-async def get_greenhouse(
+async def get_greenhouse_by_id(
                         greenhouse_id: int,
                         repository : GreenhouseRepositoryAdapter = Depends(get_greenhose_repository),
                         uow : SQLAlchemyUnitOfWorkManager = Depends(get_uow) 
@@ -103,7 +103,7 @@ async def get_sector(
 
 
 @management_router.get("/sector/{sector_id}")
-async def get_sector(
+async def get_sector_by_id(
     sector_id,
     repository : SectorRepositoryAdapter = Depends(get_sector_repository),
     uow : SQLAlchemyUnitOfWorkManager = Depends(get_uow)
@@ -137,6 +137,7 @@ async def create_sector(
     repository : SectorRepositoryAdapter = Depends(get_sector_repository),
     uow : SQLAlchemyUnitOfWorkManager = Depends(get_uow) 
 ):
+    
     sector = SectorModel(
         uuid = str(uuid.uuid4()),
         name= body["name"],

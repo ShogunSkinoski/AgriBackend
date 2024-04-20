@@ -19,5 +19,5 @@ class Flies:
             "greenhouse_id": self.greenhouse_id,
             "sector_id": self.sector_id,
             "flies_count": self.flies_count,
-            "created_at": self.created_at.strftime("%Y-%m-%d")
+            "created_at": self.created_at.strftime("%Y-%m-%d %H:%M:%S")
         }

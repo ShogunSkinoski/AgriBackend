@@ -28,7 +28,7 @@ class TotalFlyResponseMobile(FlyResponse):
     def __init__(self, flies_count):
         self.flies_count = flies_count
         self.device = "mobile"
-        self.date = datetime.now().strftime("%Y-%m-%d")
+        self.date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def serialize(self):
         return {

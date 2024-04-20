@@ -9,10 +9,10 @@ from seedwork.infra.uow import SQLAlchemyUnitOfWorkManager
 from modules.detection.infra.db.model.flies_model import FliesModel
 from modules.detection.infra.db.adapter.repository import FliesRepositoryAdapter
 from sqlalchemy import create_engine
+import matplotlib.pyplot as plt
 
 import numpy as np
 from PIL import Image
-
 model = YOLO(r'src\modules\detection\ai_models\fly_best.pt', verbose=False)
 
 fly_router = APIRouter()
@@ -36,6 +36,7 @@ async def detect_fly(image: UploadFile = File(...),
                     repository : FliesRepositoryAdapter = Depends(get_fly_repository),
                     uow : SQLAlchemyUnitOfWorkManager = Depends(get_uow)):
     image = Image.open(image.file)
+    
     total_flies_response = await service.execute(np.array(image), TotalFlyResponseMobile)
 
     flies_model = FliesModel(

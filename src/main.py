@@ -1,8 +1,12 @@
 from fastapi import FastAPI
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
 from modules.detection.app.flies import fly_router
 from modules.detection.app.color import color_router
 from modules.base.app.management import management_router
-app = FastAPI()
+app = FastAPI(middleware=[
+    Middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+])
 app.include_router(management_router, prefix="/management", tags=["management"])
 app.include_router(fly_router, prefix="/fly", tags=["fly"])
 app.include_router(color_router, prefix="/color", tags=["color"])
